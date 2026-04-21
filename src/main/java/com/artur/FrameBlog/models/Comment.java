@@ -4,35 +4,36 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+
 @Entity
-@Table(name= "Comment")
+@Table(name = "Comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long commentId;
+    private Long commentId;
     private String content;
     private Date date;
     @ManyToOne
-    private User userId;
-    @OneToMany
-    private Post postId ;
+    private User user;
+    @ManyToOne
+    private Post post;
 
     public Comment() {
     }
 
-    public Comment(final long commentId,final  String content, final Date date,final User userId, final Post postId) {
+    public Comment(Long commentId, String content, Date date, User user, Post post) {
         this.commentId = commentId;
         this.content = content;
         this.date = date;
-        this.userId = userId;
-        this.postId = postId;
+        this.user = user;
+        this.post = post;
     }
 
-    public long getCommentId() {
+    public Long getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(long commentId) {
+    public void setCommentId(Long commentId) {
         this.commentId = commentId;
     }
 
@@ -52,19 +53,19 @@ public class Comment {
         this.date = date;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
-    public Post getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(Post postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
