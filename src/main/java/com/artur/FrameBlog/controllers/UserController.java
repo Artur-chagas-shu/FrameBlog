@@ -15,6 +15,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @Autowired
 
 
@@ -23,7 +24,6 @@ public class UserController {
         return userService.save(user);
     }
 
-    @Cacheable
     @GetMapping(path = "/getAll")
     private @ResponseBody List<User> getAll() {
         return userService.getAll();

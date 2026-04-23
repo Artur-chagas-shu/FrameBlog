@@ -5,6 +5,7 @@ import com.artur.FrameBlog.repositories.UserRepository;
 import com.artur.FrameBlog.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public User save(final User user) {
         User existingUser = userRepository.findByUsername(user.getUsername());
 
-        if(Objects.nonNull(existingUser)){
+        if (Objects.nonNull(existingUser)) {
             throw new RuntimeException("Existing User");
         }
         String passwordHash = passwordEncoder.encode(user.getPassword());
@@ -37,21 +38,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User get(final Long id){
+    public User get(final Long id) {
+
         return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
+
     }
 
     @Override
-    public User update(final Long id, final User user){
+    public User update(final Long id, final User user) {
         User userUpdate = userRepository.findById(id).orElse(null);
-        if(Objects.nonNull(userUpdate)){
+        if (Objects.nonNull(userUpdate)) {
             String passwordHash = passwordEncoder.encode(user.getPassword());
             userUpdate.setName(user.getName());
             userUpdate.setUsername(user.getUsername());
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(final Long id){
+    public void delete(final Long id) {
         userRepository.deleteById(id);
     }
 
